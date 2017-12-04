@@ -1,12 +1,16 @@
-LDA:
+http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html
+
+LDA(Krishna):
 {'solver': 'eigen', 'n_components': 0, 'shrinkage': 0.10710710710710711}
 {'solver': 'lsqr', 'shrinkage': 0.46346346346346345, 'n_components': 0}
 
 
-RandomForestClassifier:
+RandomForestClassifier (Krishna):
 {'n_estimators': 1000, min_samples_split': 6, 'criterion': 'gini', 'min_samples_leaf': 3, 'bootstrap': False, 'max_depth': None, 'max_features': 5} ==> 0.63125
 
 {'min_samples_leaf': 1, 'min_samples_split': 9, 'max_depth': 7, 'max_features': 1, 'criterion': 'entropy', 'n_estimators': 1000, 'bootstrap': True} ==> 0.6337
 
 
-KNeighborsClassifier
+KNeighborsClassifier (Rashish):
+
+GaussianProcessClassifier (Rashish):
