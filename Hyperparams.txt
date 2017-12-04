@@ -6,4 +6,7 @@ LDA:
 RandomForestClassifier:
 {'n_estimators': 1000, min_samples_split': 6, 'criterion': 'gini', 'min_samples_leaf': 3, 'bootstrap': False, 'max_depth': None, 'max_features': 5} ==> 0.63125
 
-{'min_samples_leaf': 1, 'min_samples_split': 9, 'max_depth': 7, 'max_features': 1, 'criterion': 'entropy', 'n_estimators': 1000, 'bootstrap': True} ==> 0.63375
+{'min_samples_leaf': 1, 'min_samples_split': 9, 'max_depth': 7, 'max_features': 1, 'criterion': 'entropy', 'n_estimators': 1000, 'bootstrap': True} ==> 0.6337
+
+
+KNeighborsClassifier
