@@ -1,0 +1,3 @@
+LDA:
+{'solver': 'eigen', 'n_components': 0, 'shrinkage': 0.10710710710710711}
+{'solver': 'lsqr', 'shrinkage': 0.46346346346346345, 'n_components': 0}
