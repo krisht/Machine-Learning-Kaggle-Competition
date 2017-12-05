@@ -5,8 +5,16 @@ from sklearn.ensemble import AdaBoostClassifier, ExtraTreesClassifier, RandomFor
 from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
 from sklearn.svm import libsvm_sparse
 from sklearn.manifold import TSNE
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import  GaussianNB
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import ExtraTreeClassifier
+from sklearn.svm import NuSVC, SVC, LinearSVC
 from sklearn.utils import shuffle
+from scipy.stats import randint as sp_randint
 import numpy as np
+from xgboost import XGBClassifier
 
 INPUT_PATH = "../inputs/train.csv"
 TEST_PATH = "../inputs/test.csv"
@@ -33,31 +41,25 @@ def split_data_set():
 
 train_X, valid_X, test_X, train_y, valid_y = split_data_set()
 
-clf = RandomForestClassifier(n_jobs=-1)
 
-from scipy.stats import randint as sp_randint
-param_dist = {"n_estimators": [10, 100, 1000, 10000], "max_depth": [None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-              "max_features": sp_randint(1, 11),
-              "min_samples_split": sp_randint(2, 11),
-              "min_samples_leaf": sp_randint(1, 11),
-              "bootstrap": [True, False],
-              "criterion": ["gini", "entropy"]}
+# Model
+clf = XGBClassifier(nthread=8)
 
-n_iter_search = 20
-clf = RandomizedSearchCV(clf, param_distributions=param_dist, n_iter=n_iter_search)
+# Search Parameters
 
+param_dist = {'max_depth':[1, 2, 3, 4, 5]} #number of trees, change it to 1000 for better results}
 
+grid_search = True
 
-clf.fit(train_X, train_y)
-print(clf.best_score_)
-print(clf.best_params_)
-
-# print(clf.score(train_X, train_y))
-# print(clf.score(valid_X, valid_y))
-#
-# with open('out.csv', 'w') as f:
-# 	f.write('Id,Prediction\n')
-#
-#
-# np.savetxt(open('out.csv', 'ab'), np.c_[np.arange(1, len(test_X)+1), clf.predict(test_X)], '%d', delimiter=',')
-#
+if grid_search:
+	clf = GridSearchCV(clf, param_grid=param_dist)
+	clf.fit(train_X, train_y)
+	print(clf.best_score_)
+	print(clf.best_params_)
+else:
+	clf.fit(train_X, train_y)
+	print("Training Score: ", clf.score(train_X, train_y))
+	print("Validation Score: ", clf.score(valid_X, valid_y))
+	with open('out.csv', 'w') as f:
+		f.write('Id,Prediction\n')
+	np.savetxt(open('out.csv', 'ab'), np.c_[np.arange(1, len(test_X)+1), clf.predict(test_X)], '%d', delimiter=',')
