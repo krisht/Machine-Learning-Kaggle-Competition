@@ -16,6 +16,8 @@ from scipy.stats import randint as sp_randint
 import numpy as np
 from xgboost import XGBClassifier
 
+from sklearn.mixture import GaussianMixture as GMM
+
 INPUT_PATH = "../inputs/train.csv"
 TEST_PATH = "../inputs/test.csv"
 
@@ -43,11 +45,13 @@ train_X, valid_X, test_X, train_y, valid_y = split_data_set()
 
 
 # Model
-clf = XGBClassifier(nthread=8)
+clf = LogisticRegression()
 
 # Search Parameters
 
-param_dist = {'max_depth':[1, 2, 3, 4, 5]} #number of trees, change it to 1000 for better results}
+param_dist = {'penalty':['l1', 'l2'], 'solver':['liblinear', 'sag', 'saga'], 'n_jobs':[8], 'C':[0.5, 1.0, 1.5]}
+
+#param_dist = {'objective': ['multi:softmax'], 'n_estimators':[1000], 'max_depth':[5]} #number of trees, change it to 1000 for better results}
 
 grid_search = True
 
